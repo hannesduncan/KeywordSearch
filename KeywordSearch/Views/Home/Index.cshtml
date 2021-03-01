@@ -1,0 +1,65 @@
+﻿@using KeywordSearch.Models;
+@model SearchModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="col-md-8">
+    <h1 class="display-4">Welcome</h1>
+    
+    <form asp-action="Index" method="post" class="form-horizonal" role="form">
+
+        <div class="form-group">
+            <label asp-for="Url" class="col-md-2 col-form-label"></label>
+            <div class="col-md-6">
+                <input asp-for="Url" class="form-control" />
+            </div>
+            <span asp-validation-for="Url" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Keyword" class="col-md-2 col-form-label"></label>
+            <div class="col-md-6">
+                <input asp-for="Keyword" class="form-control" />
+            </div>
+            <span asp-validation-for="Keyword" class="text-danger"></span>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-success">Save</button>
+        </div>
+    </form>
+    <div class="search-result-container">
+        <div class="col-md-4">
+            @if (Model.Results != null)
+            {
+                <h3>@Model.Results.Count() Results found</h3>
+                foreach (var item in Model.Results)
+                {
+                    <p>Position: @item</p>
+                }
+
+            }
+        </div>
+        <div class="col-md-6">
+            @if (Model.SearchRecords != null)
+            {
+                <h3>Search History</h3>
+                foreach (var item in Model.SearchRecords)
+                {
+                    <div class="card-group">
+                        <label class="col-md-6" asp-for="@item.NumberOfResult"></label>
+                        <div class="col-md-6">
+                            @item.NumberOfResult.ToString()
+                        </div>
+                        <label class="col-md-6" asp-for="@item.Positions"></label>
+                        <div class="col-md-6">
+                            @item.Positions
+                        </div>
+                    </div>
+                }
+
+            }
+        </div>
+    </div>
+</div>
